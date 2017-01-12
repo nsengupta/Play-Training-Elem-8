@@ -15,6 +15,7 @@ libraryDependencies ++= Seq(
 libraryDependencies += "org.webjars" % "bootstrap" % "3.3.6"
 
 libraryDependencies ++= Seq(
+  "com.mashape.unirest" % "unirest-java" % "1.4.9",
   "junit" % "junit" % "4.12" % "test",
   "com.novocode" % "junit-interface" % "0.11" % "test",
   "com.typesafe.akka" % "akka-testkit_2.11" % "2.4.16"
@@ -22,3 +23,6 @@ libraryDependencies ++= Seq(
 
 
 fork in run := false
+
+
+//fork in run := true

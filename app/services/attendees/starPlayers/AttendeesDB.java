@@ -53,5 +53,19 @@ public class AttendeesDB {
 		attendees.put(sa.getLastName(), sa);
 		return (attendeeCount());
 	}
+	
+	public String getCurrentVoteStatus(String lname) {
+		
+		String status = this.attendees.get(lname).toString();
+		return (status);
+	}
+	
+	
+	// TODO [Make this functionality available to the external world]
+	public int addVoteFor(String lname) {
+		
+		SoccerAttendeeRecord r = this.attendees.get(lname);
+		return(r.earnsAVote());	
+	}
 
 }
