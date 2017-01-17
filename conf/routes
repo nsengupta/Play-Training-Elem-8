@@ -9,6 +9,10 @@ GET     /count                      controllers.AttendeesController.count
 
 GET     /all                        controllers.AttendeesController.getAll
 
+GET    /votefor/:lname             controllers.AttendeesController.voteFor(lname: String)
+
+GET     /ws                         controllers.AttendeesController.ws
+
 #GET     /example                        controllers.AttendeesController.externalWS
 
 #GET     /surname/:sname             controllers.AttendeesController.getBySurname(sname: String)

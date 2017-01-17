@@ -10,6 +10,8 @@ import akka.actor.Props;
 import akka.actor.UntypedActor;
 import akka.japi.Creator;
 
+import services.attendees.starPlayers.SoccerInfoMessageProtocol.VoteStatus;
+
 public class JeevesActor extends UntypedActor {
 	
 	private Out<String> wsOut;
@@ -17,9 +19,15 @@ public class JeevesActor extends UntypedActor {
 	@Override
 	public void onReceive(Object arg0) throws Throwable {
 	
-		
-		
-
+		if (arg0 instanceof SoccerInfoMessageProtocol.VoteStatus) {
+			SoccerInfoMessageProtocol.VoteStatus v = (SoccerInfoMessageProtocol.VoteStatus) arg0;
+			System.out.println("VoteStatus received (" + v.status + ")");
+			wsOut.write(v.status);
+		}
+	}
+	
+	public void postStop() {
+		System.out.println(getSelf().path() + " is going down!");
 	}
 	
 	public static Props props(final WebSocket.Out<String> wsOut) {
@@ -37,6 +45,5 @@ public class JeevesActor extends UntypedActor {
 		this.wsOut = out;
 	}
 	
-	public static Props props = Props.create(JeevesActor.class);
 
 }

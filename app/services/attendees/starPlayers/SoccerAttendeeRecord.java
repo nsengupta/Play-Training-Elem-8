@@ -35,6 +35,6 @@ public class SoccerAttendeeRecord {
 	}
 	
 	public String toString() {
-		return (this.lastName + " " + this.firstName + "[" + votesPolled + "]");
+		return (this.lastName + " " + this.firstName + " | votes polled so far [" + votesPolled + "]");
 	}
 }

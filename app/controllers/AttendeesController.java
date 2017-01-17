@@ -8,6 +8,7 @@ import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 
 import models.attendees.StarPlayers.SoccerAttendeeDataCarrier;
+import models.attendees.StarPlayers.SoccerAttendeeVoteCarrier;
 import play.data.Form;
 import play.data.FormFactory;
 import play.libs.Akka;
@@ -22,13 +23,11 @@ import scala.compat.java8.FutureConverters;
 import services.attendees.starPlayers.JeevesActor;
 import services.attendees.starPlayers.SoccerAttendeesInfoActor;
 import services.attendees.starPlayers.SoccerInfoMessageProtocol;
-
 import views.html.index;
 import views.html.attendees.list;
 import views.html.attendees.count;
 import views.html.attendees.external;
 import views.html.attendees.voteStatus;
-
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 
@@ -43,21 +42,18 @@ public class AttendeesController extends Controller {
      * this method will be called when the application receives a
      * <code>GET</code> request with a path of <code>/</code>.
      */
-	@Inject
-    ActorSystem actorSystem;
+	
+    private final ActorSystem actorSystem;
 	
 	@Inject
 	FormFactory formFactory;
 	
 	private final ActorRef soccerAttendeesInfoActor;
-
-	
 	@Inject
-    public AttendeesController() {
+    public AttendeesController(ActorSystem actorSystem) {
+		this.actorSystem = actorSystem;
        this.soccerAttendeesInfoActor = actorSystem.actorOf(SoccerAttendeesInfoActor.props,"Soccer-Players-Actor");
     }
-	
-	
     public Result index() {
         return ok(index.render("Attendees Application is being readied."));
     }
@@ -79,13 +75,15 @@ public class AttendeesController extends Controller {
     @SuppressWarnings("deprecation")
 	public LegacyWebSocket<String> ws() {
         return WebSocket.whenReady((in, out) -> {
-           
+        	final String[] outComponents = out.toString().split("@");
         	// Create a Jeeves for this client
-            final ActorRef jeeves = actorSystem.actorOf(JeevesActor.props(out),"JeevesActor");
-
+            final ActorRef jeeves = actorSystem
+            		.actorOf(
+            				JeevesActor.props(out),
+            				"JeevesActor" + outComponents[1]
+            		);
             // Remember to send all WebSocket outbound message to the JeevesActor
-            in.onMessage(lastName -> {
-              
+            in.onMessage(lastName -> {            
                 this.soccerAttendeesInfoActor
                 .tell(
                 		new SoccerInfoMessageProtocol.AFanOf(lastName), 
@@ -133,6 +131,13 @@ public class AttendeesController extends Controller {
     public Result addAttendee(String surname,String firstname) {
     	return TODO;
     }
+    
+    public Result voteForSoccerAttendeeThruForm() {
+    	Form<SoccerAttendeeVoteCarrier> attendeeForm = formFactory.form(SoccerAttendeeVoteCarrier.class);
+    	attendeeForm.fill(new SoccerAttendeeVoteCarrier("LastName here",0));
+    	return TODO;
+    }
+    
     
     public Result addSoccerAttendeeThruForm() {
     	Form<SoccerAttendeeDataCarrier> attendeeForm = formFactory.form(SoccerAttendeeDataCarrier.class);

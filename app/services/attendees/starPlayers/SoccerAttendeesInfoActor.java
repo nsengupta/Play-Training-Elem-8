@@ -35,7 +35,7 @@ public class SoccerAttendeesInfoActor extends UntypedActor {
 	LoggingAdapter log = Logging.getLogger(getContext().system(), this);
 	
 	private AttendeesDB attendeesDB = new AttendeesDB();
-	final HashSet<ActorRef> watchers = new HashSet<ActorRef>();
+	private final HashSet<ActorRef> watchers = new HashSet<ActorRef>();
 	
 
 	@Override
