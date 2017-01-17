@@ -1,49 +1,12 @@
-This is your new Play application
-=================================
+This program demonstrates integration of Websocket
+with Play2 framework.
 
-This file will be packaged with your application when using `activator dist`.
+HTTP Get requests are used to vote for a soccer player in AttendeesDB.
 
-There are several demonstration files available in this template.
+Google Chrome's Dark Websocket terminal is used as Websocket client.
 
-Controllers
-===========
+As more votes are polled for a soccer player in AttendeesDB, the current votes polled
+are displayed in the Websocket terminal.
 
-- HomeController.java:
-
-  Shows how to handle simple HTTP requests.
-
-- AsyncController.java:
-
-  Shows how to do asynchronous programming when handling a request.
-
-- CountController.java:
-
-  Shows how to inject a component into a controller and use the component when
-  handling requests.
-
-Components
-==========
-
-- Module.java:
-
-  Shows how to use Guice to bind all the components needed by your application.
-
-- Counter.java:
-
-  An example of a component that contains state, in this case a simple counter.
-
-- ApplicationTimer.java:
-
-  An example of a component that starts when the application starts and stops
-  when the application stops.
-
-Filters
-=======
-
-- Filters.java:
-
-  Creates the list of HTTP filters used by your application.
-
-- ExampleFilter.java
-
-  A simple filter that adds a header to every response.
+This code uses old (deprecated) Java WebSocket APIs of Play. 
+But, this may be replaced with more functional Scala interface, by Java8 lambdas!
